@@ -336,7 +336,9 @@ class Deployer
     files += Dir.glob(File.join(@app_bundle, '**', '*.framework'))
     files << @app_bundle
 
-    execute("/usr/bin/codesign -f -s \"#{@certificate}\" #{files.collect {|f| "\"#{f}\"" }.join(' ')}")
+    files.each do |file|
+      execute("/usr/bin/codesign -f -s \"#{@certificate}\" #{file}")
+    end
   end
 end
 
